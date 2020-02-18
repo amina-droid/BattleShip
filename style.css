@@ -128,3 +128,17 @@ body {
     background: url(src/ship.png);
     background-size: contain;
 }
+
+.hit{
+    background: url(src/hit.png);
+    background-size: contain;
+}
+
+.miss{
+    background: url(src/miss.png);
+    background-size: contain;
+}
+
+.opacity{
+    background: black;
+}

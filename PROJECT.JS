@@ -4,16 +4,14 @@ class Game {
         this.secondPlayer = new Player(second);
     }
 
-
-
     async start() {
         await this.prepareStage();
-        console.log('done');
     }
 
     async prepareStage() {
         await this.firstPlayer.shipPlacementStage();
         await this.secondPlayer.shipPlacementStage();
+        return true
     }
 }
 
@@ -56,21 +54,19 @@ class Player {
         return cells;
     }
 
-    shipPlacementStage() {
-        return new Promise(prepare => {
+    shipPlacementStage = () => new Promise(prepare => {
+        this.mainCells.forEach(cell => {
+            cell.addEventListener('click', this.handlerAddShip);
+        });
+
+        this.gameButton.addEventListener('click', () => {
             this.mainCells.forEach(cell => {
-                cell.addEventListener('click', this.handlerAddShip);
-            });
-    
-            this.gameButton.addEventListener('click', () => {
-                this.mainCells.forEach(cell => {
-                    cell.removeEventListener('click', this.handlerAddShip);
-                })
-    
-                prepare();
+                cell.removeEventListener('click', this.handlerAddShip);
             })
-        })
-    }
+
+            prepare();
+        }, { once: true })
+    })
 
     handlerAddShip(event) {
         event.target.classList.toggle('ship');
